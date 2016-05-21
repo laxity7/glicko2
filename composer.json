@@ -1,5 +1,5 @@
 {
-    "name": "zelenin/glicko2",
+    "name": "pelmered/glicko2",
     "description": "A PHP implementation of Glicko2 rating system",
     "type": "library",
     "keywords": [
