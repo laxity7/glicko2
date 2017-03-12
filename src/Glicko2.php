@@ -42,8 +42,8 @@ final class Glicko2
         $calculationResult1 = $this->calculatePlayer($player1, $player2, $score);
         $calculationResult2 = $this->calculatePlayer($player2, $player1, (1 - $score));
 
-        $match->getPlayer1()->loadFromCalculationResult($calculationResult1);
-        $match->getPlayer2()->loadFromCalculationResult($calculationResult2);
+        $match->getPlayer1()->setCalculationResult($calculationResult1);
+        $match->getPlayer2()->setCalculationResult($calculationResult2);
     }
 
     /**
@@ -55,12 +55,12 @@ final class Glicko2
      */
     private function calculatePlayer(Player $player1, Player $player2, $score)
     {
-        $phi = $player1->getPhi();
-        $mu = $player1->getMu();
-        $sigma = $player1->getSigma();
+        $phi = $player1->getRatingDeviationPhi();
+        $mu = $player1->getRatingMu();
+        $sigma = $player1->getRatingVolatility();
 
-        $phiJ = $player2->getPhi();
-        $muJ = $player2->getMu();
+        $phiJ = $player2->getRatingDeviationPhi();
+        $muJ = $player2->getRatingMu();
 
         $v = $this->v($phiJ, $mu, $muJ);
         $delta = $this->delta($phiJ, $mu, $muJ, $score);

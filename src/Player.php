@@ -15,34 +15,34 @@ final class Player
      *
      * @var float
      */
-    private $r;
+    private $rating;
 
     /** A rating μ
      *
      * @var float
      */
-    private $mu;
+    private $ratingMu;
 
     /**
      * A rating deviation RD
      *
      * @var float
      */
-    private $RD;
+    private $ratingDeviation;
 
     /**
      * A rating deviation φ
      *
      * @var float
      */
-    private $phi;
+    private $ratingDeviationPhi;
 
     /**
      * A rating volatility σ
      *
      * @var float
      */
-    private $sigma;
+    private $ratingVolatility;
 
     /**
      * @param float $rating
@@ -51,45 +51,45 @@ final class Player
      */
     public function __construct($r = self::DEFAULT_R, $RD = self::DEFAULT_RD, $sigma = self::DEFAULT_SIGMA)
     {
-        $this->setR($r);
-        $this->setRD($RD);
+        $this->setRating($r);
+        $this->setRatingDeviation($RD);
         $this->setSigma($sigma);
     }
 
     /**
      * @param float $r
      */
-    private function setR($r)
+    private function setRating($r)
     {
-        $this->r = $r;
-        $this->mu = ($this->r - self::DEFAULT_R) / self::CONVERT;
+        $this->rating = $r;
+        $this->ratingMu = ($this->rating - self::DEFAULT_R) / self::CONVERT;
     }
 
     /**
      * @param float $mu
      */
-    private function setMu($mu)
+    private function setRatingMu($mu)
     {
-        $this->mu = $mu;
-        $this->r = $this->mu * self::CONVERT + self::DEFAULT_R;
+        $this->ratingMu = $mu;
+        $this->rating = $this->ratingMu * self::CONVERT + self::DEFAULT_R;
     }
 
     /**
      * @param float $RD
      */
-    private function setRD($RD)
+    private function setRatingDeviation($RD)
     {
-        $this->RD = $RD;
-        $this->phi = $this->RD / self::CONVERT;
+        $this->ratingDeviation = $RD;
+        $this->ratingDeviationPhi = $this->ratingDeviation / self::CONVERT;
     }
 
     /**
      * @param float $phi
      */
-    private function setPhi($phi)
+    private function setRatingDeviationPhi($phi)
     {
-        $this->phi = $phi;
-        $this->RD = $this->phi * self::CONVERT;
+        $this->ratingDeviationPhi = $phi;
+        $this->ratingDeviation = $this->ratingDeviationPhi * self::CONVERT;
     }
 
     /**
@@ -97,56 +97,57 @@ final class Player
      */
     private function setSigma($sigma)
     {
-        $this->sigma = $sigma;
+        $this->ratingVolatility = $sigma;
     }
 
     /**
      * @return float
      */
-    public function getR()
+    public function getRating()
     {
-        return $this->r;
+        return $this->rating;
     }
 
     /**
      * @return float
      */
-    public function getMu()
+    public function getRatingMu()
     {
-        return $this->mu;
+        return $this->ratingMu;
     }
 
     /**
      * @return float
      */
-    public function getRd()
+    public function getRatingDeviation()
     {
-        return $this->RD;
+        return $this->ratingDeviation;
     }
 
     /**
      * @return float
      */
-    public function getPhi()
+    public function getRatingDeviationPhi()
     {
-        return $this->phi;
+        return $this->ratingDeviationPhi;
     }
 
     /**
      * @return float
      */
-    public function getSigma()
+    public function getRatingVolatility()
     {
-        return $this->sigma;
+        return $this->ratingVolatility;
     }
 
     /**
      * @param CalculationResult $calculationResult
      */
-    public function loadFromCalculationResult(CalculationResult $calculationResult)
+    public function setCalculationResult(CalculationResult $calculationResult)
     {
-        $this->setMu($calculationResult->getMu());
-        $this->setPhi($calculationResult->getPhi());
+        $this->setRatingMu($calculationResult->getMu());
+        $this->setRatingDeviationPhi($calculationResult->getPhi());
         $this->setSigma($calculationResult->getSigma());
+        $this->save();
     }
 }

@@ -25,9 +25,9 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
     {
         $player = new Player();
 
-        $this->assertEquals(Player::DEFAULT_R, $player->getR());
-        $this->assertEquals(Player::DEFAULT_RD, $player->getRd());
-        $this->assertEquals(Player::DEFAULT_SIGMA, $player->getSigma());
+        $this->assertEquals(Player::DEFAULT_R, $player->getRating());
+        $this->assertEquals(Player::DEFAULT_RD, $player->getRatingDeviation());
+        $this->assertEquals(Player::DEFAULT_SIGMA, $player->getRatingVolatility());
     }
 
     public function testCustomPlayer()
@@ -38,9 +38,9 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
 
         $player = new Player($r, $rd, $sigma);
 
-        $this->assertEquals($r, $player->getR());
-        $this->assertEquals($rd, $player->getRd());
-        $this->assertEquals($sigma, $player->getSigma());
+        $this->assertEquals($r, $player->getRating());
+        $this->assertEquals($rd, $player->getRatingDeviation());
+        $this->assertEquals($sigma, $player->getRatingVolatility());
     }
 
     public function testCalculateMatch()
@@ -51,13 +51,13 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $match = new Match($player1, $player2, 1, 0);
         $this->glicko->calculateMatch($match);
 
-        $this->assertEquals(1563.564, $this->round($player1->getR()));
-        $this->assertEquals(175.403, $this->round($player1->getRd()));
-        $this->assertEquals(0.06, $this->round($player1->getSigma()));
+        $this->assertEquals(1563.564, $this->round($player1->getRating()));
+        $this->assertEquals(175.403, $this->round($player1->getRatingDeviation()));
+        $this->assertEquals(0.06, $this->round($player1->getRatingVolatility()));
 
-        $this->assertEquals(1398.144, $this->round($player2->getR()));
-        $this->assertEquals(31.67, $this->round($player2->getRd()));
-        $this->assertEquals(0.06, $this->round($player2->getSigma()));
+        $this->assertEquals(1398.144, $this->round($player2->getRating()));
+        $this->assertEquals(31.67, $this->round($player2->getRatingDeviation()));
+        $this->assertEquals(0.06, $this->round($player2->getRatingVolatility()));
     }
 
     public function testCalculateMatchCollection()
@@ -78,12 +78,12 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $matchCollection->addMatch(new Match($player3, $player4, 1, 0));
         $this->glicko->calculateMatches($matchCollection);
 
-        $this->assertEquals($this->round($player1->getR()), $this->round($player3->getR()));
-        $this->assertEquals($this->round($player2->getR()), $this->round($player4->getR()));
-        $this->assertEquals($this->round($player1->getRd()), $this->round($player3->getRd()));
-        $this->assertEquals($this->round($player2->getRd()), $this->round($player4->getRd()));
-        $this->assertEquals($this->round($player1->getSigma()), $this->round($player3->getSigma()));
-        $this->assertEquals($this->round($player2->getSigma()), $this->round($player4->getSigma()));
+        $this->assertEquals($this->round($player1->getRating()), $this->round($player3->getRating()));
+        $this->assertEquals($this->round($player2->getRating()), $this->round($player4->getRating()));
+        $this->assertEquals($this->round($player1->getRatingDeviation()), $this->round($player3->getRatingDeviation()));
+        $this->assertEquals($this->round($player2->getRatingDeviation()), $this->round($player4->getRatingDeviation()));
+        $this->assertEquals($this->round($player1->getRatingVolatility()), $this->round($player3->getRatingVolatility()));
+        $this->assertEquals($this->round($player2->getRatingVolatility()), $this->round($player4->getRatingVolatility()));
     }
 
     /**
