@@ -1,12 +1,12 @@
 <?php
 
-namespace Zelenin\Glicko2\Test;
+namespace Pelmered\Glicko2\Test;
 
 use PHPUnit_Framework_TestCase;
-use Zelenin\Glicko2\Glicko2;
-use Zelenin\Glicko2\Match;
-use Zelenin\Glicko2\MatchCollection;
-use Zelenin\Glicko2\Player;
+use Pelmered\Glicko2\Glicko2;
+use Pelmered\Glicko2\Match;
+use Pelmered\Glicko2\MatchCollection;
+use Pelmered\Glicko2\Player;
 
 final class Glicko2Test extends PHPUnit_Framework_TestCase
 {

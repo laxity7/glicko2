@@ -1,6 +1,6 @@
 <?php
 
-namespace Zelenin\Glicko2;
+namespace Pelmered\Glicko2;
 
 final class Glicko2
 {
