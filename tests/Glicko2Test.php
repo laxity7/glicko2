@@ -1,33 +1,22 @@
 <?php
 
-namespace Pelmered\Glicko2\Test;
+namespace laxity7\glicko2\Test;
 
 use PHPUnit_Framework_TestCase;
-use Pelmered\Glicko2\Glicko2;
-use Pelmered\Glicko2\Match;
-use Pelmered\Glicko2\MatchCollection;
-use Pelmered\Glicko2\Player;
+use laxity7\glicko2\Match;
+use laxity7\glicko2\MatchCollection;
+use laxity7\glicko2\Player;
 
 final class Glicko2Test extends PHPUnit_Framework_TestCase
 {
-    /**
-     * @var Glicko2
-     */
-    private $glicko;
-
-    public function setUp()
-    {
-        $this->glicko = new Glicko2();
-        parent::setUp();
-    }
 
     public function testDefaultPlayer()
     {
         $player = new Player();
 
-        $this->assertEquals(Player::DEFAULT_R, $player->getRating());
-        $this->assertEquals(Player::DEFAULT_RD, $player->getRatingDeviation());
-        $this->assertEquals(Player::DEFAULT_SIGMA, $player->getRatingVolatility());
+        $this->assertEquals(Player::DEFAULT_RATING, $player->getRating());
+        $this->assertEquals(Player::DEFAULT_RATING_DEVIATION, $player->getRatingDeviation());
+        $this->assertEquals(Player::DEFAULT_RATING_VOLATILITY, $player->getRatingVolatility());
     }
 
     public function testCustomPlayer()
@@ -49,7 +38,7 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $player2 = new Player(1400, 30, 0.06);
 
         $match = new Match($player1, $player2, 1, 0);
-        $this->glicko->calculateMatch($match);
+        $match->calculate();
 
         $this->assertEquals(1563.564, $this->round($player1->getRating()));
         $this->assertEquals(175.403, $this->round($player1->getRatingDeviation()));
@@ -69,14 +58,14 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $player4 = clone $player2;
 
         $match = new Match($player1, $player2, 1, 0);
-        $this->glicko->calculateMatch($match);
+        $match->calculate();
         $match = new Match($player1, $player2, 1, 0);
-        $this->glicko->calculateMatch($match);
+        $match->calculate();
 
         $matchCollection = new MatchCollection();
         $matchCollection->addMatch(new Match($player3, $player4, 1, 0));
         $matchCollection->addMatch(new Match($player3, $player4, 1, 0));
-        $this->glicko->calculateMatches($matchCollection);
+        $matchCollection->calculate();
 
         $this->assertEquals($this->round($player1->getRating()), $this->round($player3->getRating()));
         $this->assertEquals($this->round($player2->getRating()), $this->round($player4->getRating()));

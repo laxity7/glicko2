@@ -1,14 +1,14 @@
 <?php
 
-namespace Pelmered\Glicko2;
+namespace laxity7\glicko2;
 
-final class Player
+class Player
 {
-    const CONVERT = 173.7178;
+    protected const CONVERT = 173.7178;
 
-    const DEFAULT_R = 1500;
-    const DEFAULT_RD = 350;
-    const DEFAULT_SIGMA = 0.06;
+    public const DEFAULT_RATING = 1500;
+    public const DEFAULT_RATING_DEVIATION = 350;
+    public const DEFAULT_RATING_VOLATILITY = 0.06;
 
     /**
      * A rating r
@@ -17,7 +17,8 @@ final class Player
      */
     private $rating;
 
-    /** A rating μ
+    /**
+     * A rating μ
      *
      * @var float
      */
@@ -45,65 +46,70 @@ final class Player
     private $ratingVolatility;
 
     /**
+     * Player constructor.
+     *
      * @param float $rating
-     * @param float $RD
-     * @param float $sigma
+     * @param float $ratingDeviation
+     * @param float $ratingVolatility
      */
-    public function __construct($r = self::DEFAULT_R, $RD = self::DEFAULT_RD, $sigma = self::DEFAULT_SIGMA)
-    {
-        $this->setRating($r);
-        $this->setRatingDeviation($RD);
-        $this->setSigma($sigma);
+    public function __construct(
+        $rating = self::DEFAULT_RATING,
+        $ratingDeviation = self::DEFAULT_RATING_DEVIATION,
+        $ratingVolatility = self::DEFAULT_RATING_VOLATILITY
+    ) {
+        $this->setRating($rating);
+        $this->setRatingDeviation($ratingDeviation);
+        $this->setRatingVolatility($ratingVolatility);
     }
 
     /**
-     * @param float $r
+     * @param float $rating
      */
-    private function setRating($r)
+    private function setRating(float $rating): void
     {
-        $this->rating = $r;
-        $this->ratingMu = ($this->rating - self::DEFAULT_R) / self::CONVERT;
+        $this->rating = $rating;
+        $this->ratingMu = ($this->rating - self::DEFAULT_RATING) / self::CONVERT;
     }
 
     /**
      * @param float $mu
      */
-    private function setRatingMu($mu)
+    private function setRatingMu(float $mu): void
     {
         $this->ratingMu = $mu;
-        $this->rating = $this->ratingMu * self::CONVERT + self::DEFAULT_R;
+        $this->rating = $this->ratingMu * self::CONVERT + self::DEFAULT_RATING;
     }
 
     /**
-     * @param float $RD
+     * @param float $ratingDeviation
      */
-    private function setRatingDeviation($RD)
+    private function setRatingDeviation(float $ratingDeviation): void
     {
-        $this->ratingDeviation = $RD;
+        $this->ratingDeviation = $ratingDeviation;
         $this->ratingDeviationPhi = $this->ratingDeviation / self::CONVERT;
     }
 
     /**
      * @param float $phi
      */
-    private function setRatingDeviationPhi($phi)
+    private function setRatingDeviationPhi(float $phi): void
     {
         $this->ratingDeviationPhi = $phi;
         $this->ratingDeviation = $this->ratingDeviationPhi * self::CONVERT;
     }
 
     /**
-     * @param float $sigma
+     * @param float $ratingVolatility
      */
-    private function setSigma($sigma)
+    private function setRatingVolatility(float $ratingVolatility): void
     {
-        $this->ratingVolatility = $sigma;
+        $this->ratingVolatility = $ratingVolatility;
     }
 
     /**
      * @return float
      */
-    public function getRating()
+    public function getRating(): float
     {
         return $this->rating;
     }
@@ -111,7 +117,7 @@ final class Player
     /**
      * @return float
      */
-    public function getRatingMu()
+    public function getRatingMu(): float
     {
         return $this->ratingMu;
     }
@@ -119,7 +125,7 @@ final class Player
     /**
      * @return float
      */
-    public function getRatingDeviation()
+    public function getRatingDeviation(): float
     {
         return $this->ratingDeviation;
     }
@@ -127,7 +133,7 @@ final class Player
     /**
      * @return float
      */
-    public function getRatingDeviationPhi()
+    public function getRatingDeviationPhi(): float
     {
         return $this->ratingDeviationPhi;
     }
@@ -135,7 +141,7 @@ final class Player
     /**
      * @return float
      */
-    public function getRatingVolatility()
+    public function getRatingVolatility(): float
     {
         return $this->ratingVolatility;
     }
@@ -143,11 +149,10 @@ final class Player
     /**
      * @param CalculationResult $calculationResult
      */
-    public function setCalculationResult(CalculationResult $calculationResult)
+    public function setCalculationResult(CalculationResult $calculationResult): void
     {
         $this->setRatingMu($calculationResult->getMu());
         $this->setRatingDeviationPhi($calculationResult->getPhi());
-        $this->setSigma($calculationResult->getSigma());
-        $this->save();
+        $this->setRatingVolatility($calculationResult->getSigma());
     }
 }

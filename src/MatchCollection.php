@@ -1,14 +1,14 @@
 <?php
 
-namespace Pelmered\Glicko2;
+namespace laxity7\glicko2;
 
 use ArrayIterator;
 use ArrayObject;
 
-final class MatchCollection
+class MatchCollection extends BaseMatch
 {
     /**
-     * @var ArrayObject
+     * @var ArrayObject|Match[]
      */
     private $matches;
 
@@ -20,16 +20,24 @@ final class MatchCollection
     /**
      * @param Match $match
      */
-    public function addMatch(Match $match)
+    public function addMatch(Match $match): void
     {
         $this->matches->append($match);
     }
 
     /**
-     * @return ArrayIterator
+     * @return ArrayIterator|Match[]
      */
-    public function getMatches()
+    public function getMatches(): ArrayIterator
     {
         return $this->matches->getIterator();
+    }
+
+    /** @inheritDoc */
+    public function calculate(): void
+    {
+        foreach ($this->getMatches() as $match) {
+            $match->calculate();
+        }
     }
 }

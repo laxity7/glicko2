@@ -1,6 +1,6 @@
 <?php
 
-namespace Pelmered\Glicko2;
+namespace laxity7\glicko2;
 
 final class CalculationResult
 {
@@ -24,7 +24,7 @@ final class CalculationResult
      * @param float $phi
      * @param float $sigma
      */
-    public function __construct($mu, $phi, $sigma)
+    public function __construct(float $mu, float $phi, float $sigma)
     {
         $this->mu = $mu;
         $this->phi = $phi;
@@ -34,7 +34,7 @@ final class CalculationResult
     /**
      * @return float
      */
-    public function getMu()
+    public function getMu(): float
     {
         return $this->mu;
     }
@@ -42,7 +42,7 @@ final class CalculationResult
     /**
      * @return float
      */
-    public function getPhi()
+    public function getPhi(): float
     {
         return $this->phi;
     }
@@ -50,7 +50,7 @@ final class CalculationResult
     /**
      * @return float
      */
-    public function getSigma()
+    public function getSigma(): float
     {
         return $this->sigma;
     }

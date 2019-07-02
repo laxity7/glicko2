@@ -11,13 +11,13 @@ The preferred way to install this extension is through [Composer](http://getcomp
 Either run
 
 ```
-php composer.phar require zelenin/glicko2 "~1.0.0"
+php composer.phar require laxity7/glicko2 "~1.0.0"
 ```
 
 or add
 
 ```
-"zelenin/glicko2": "~1.0.0"
+"laxity7/glicko2": "~1.0.0"
 ```
 
 to the require section of your ```composer.json```
@@ -27,33 +27,32 @@ to the require section of your ```composer.json```
 Create two players with current ratings:
 
 ```php
-use Pelmered\Glicko2\Glicko2;
-use Pelmered\Glicko2\Match;
-use Pelmered\Glicko2\MatchCollection;
-use Pelmered\Glicko2\Player;
-
-$glicko = new Glicko2();
+use laxity7\glicko2\Match;
+use laxity7\glicko2\MatchCollection;
+use laxity7\glicko2\Player;
 
 $player1 = new Player(1700, 250, 0.05);
 $player2 = new Player();
 
 $match = new Match($player1, $player2, 1, 0);
-$glicko->calculateMatch($match);
+$match->calculate();
 
 $match = new Match($player1, $player2, 3, 2);
-$glicko->calculateMatch($match);
+$match->calculate();
 
 // or
 
 $matchCollection = new MatchCollection();
 $matchCollection->addMatch(new Match($player1, $player2, 1, 0));
 $matchCollection->addMatch(new Match($player1, $player2, 3, 2));
-$glicko->calculateMatches($matchCollection);
+$matchCollection->calculate();
 
-$newPlayer1R = $player1->getR();
-$newPlayer2R = $player2->getR();
+$newPlayer1Rating = $player1->getRating();
+$newPlayer2Rating = $player2->getRating();
 ```
 
 ## Author
 
 [Aleksandr Zelenin](https://github.com/zelenin/), e-mail: [aleksandr@zelenin.me](mailto:aleksandr@zelenin.me)
+
+[Vlad Varlamov](https://github.com/laxity7/), e-mail: [work@laxity.ru](mailto:work@laxity.ru)
