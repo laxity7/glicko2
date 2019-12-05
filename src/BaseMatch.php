@@ -19,5 +19,8 @@ abstract class BaseMatch
         return $this->ratingSystem;
     }
 
+    /**
+     * Calculate match
+     */
     abstract public function calculate();
 }

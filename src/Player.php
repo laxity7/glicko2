@@ -53,9 +53,9 @@ class Player
      * @param float $ratingVolatility
      */
     public function __construct(
-        $rating = self::DEFAULT_RATING,
-        $ratingDeviation = self::DEFAULT_RATING_DEVIATION,
-        $ratingVolatility = self::DEFAULT_RATING_VOLATILITY
+        float $rating = self::DEFAULT_RATING,
+        float $ratingDeviation = self::DEFAULT_RATING_DEVIATION,
+        float $ratingVolatility = self::DEFAULT_RATING_VOLATILITY
     ) {
         $this->setRating($rating);
         $this->setRatingDeviation($ratingDeviation);
@@ -68,7 +68,7 @@ class Player
     private function setRating(float $rating): void
     {
         $this->rating = $rating;
-        $this->ratingMu = ($this->rating - self::DEFAULT_RATING) / self::CONVERT;
+        $this->ratingMu = ($this->rating - static::DEFAULT_RATING) / self::CONVERT;
     }
 
     /**
@@ -77,7 +77,7 @@ class Player
     private function setRatingMu(float $mu): void
     {
         $this->ratingMu = $mu;
-        $this->rating = $this->ratingMu * self::CONVERT + self::DEFAULT_RATING;
+        $this->rating = $this->ratingMu * self::CONVERT + static::DEFAULT_RATING;
     }
 
     /**
@@ -148,8 +148,17 @@ class Player
 
     /**
      * @param CalculationResult $calculationResult
+     * @deprecated
      */
     public function setCalculationResult(CalculationResult $calculationResult): void
+    {
+        $this->updateRating($calculationResult);
+    }
+
+    /**
+     * @param CalculationResult $calculationResult
+     */
+    public function updateRating(CalculationResult $calculationResult): void
     {
         $this->setRatingMu($calculationResult->getMu());
         $this->setRatingDeviationPhi($calculationResult->getPhi());

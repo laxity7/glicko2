@@ -1,4 +1,8 @@
-# Glicko2
+# Glicko2 rating system
+
+[![License](https://img.shields.io/github/license/laxity7/glicko2.svg)](https://github.com/laxity7/glicko2/blob/master/LICENSE)
+[![Latest Stable Version](https://img.shields.io/packagist/v/laxity7/glicko2.svg)](https://packagist.org/packages/laxity7/glicko2)
+[![Total Downloads](https://img.shields.io/packagist/dt/laxity7/glicko2.svg)](https://packagist.org/packages/laxity7/glicko2)
 
 A PHP implementation of [Glicko2 rating system](http://www.glicko.net/glicko.html)
 

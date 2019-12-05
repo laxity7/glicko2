@@ -27,8 +27,8 @@ class Match extends BaseMatch
     {
         $this->player1 = $player1;
         $this->player2 = $player2;
-        $this->score1 = (float)$score1;
-        $this->score2 = (float)$score2;
+        $this->score1 = $score1;
+        $this->score2 = $score2;
     }
 
     /**
@@ -49,7 +49,7 @@ class Match extends BaseMatch
                 break;
         }
 
-        return (float)$matchScore;
+        return (float) $matchScore;
     }
 
     /**
@@ -82,7 +82,7 @@ class Match extends BaseMatch
         $calculationResult1 = $ratingSystem->calculatePlayer($player1, $player2, $score);
         $calculationResult2 = $ratingSystem->calculatePlayer($player2, $player1, (1 - $score));
 
-        $player1->setCalculationResult($calculationResult1);
-        $player2->setCalculationResult($calculationResult2);
+        $player1->updateRating($calculationResult1);
+        $player2->updateRating($calculationResult2);
     }
 }
