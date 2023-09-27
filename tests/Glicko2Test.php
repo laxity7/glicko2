@@ -3,7 +3,7 @@
 namespace laxity7\glicko2\Test;
 
 use PHPUnit_Framework_TestCase;
-use laxity7\glicko2\Match;
+use laxity7\glicko2\MatchGame;
 use laxity7\glicko2\MatchCollection;
 use laxity7\glicko2\Player;
 
@@ -37,7 +37,7 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $player1 = new Player(1500, 200, 0.06);
         $player2 = new Player(1400, 30, 0.06);
 
-        $match = new Match($player1, $player2, 1, 0);
+        $match = new MatchGame($player1, $player2, 1, 0);
         $match->calculate();
 
         $this->assertEquals(1563.564, $this->round($player1->getRating()));
@@ -57,14 +57,14 @@ final class Glicko2Test extends PHPUnit_Framework_TestCase
         $player3 = clone $player1;
         $player4 = clone $player2;
 
-        $match = new Match($player1, $player2, 1, 0);
+        $match = new MatchGame($player1, $player2, 1, 0);
         $match->calculate();
-        $match = new Match($player1, $player2, 1, 0);
+        $match = new MatchGame($player1, $player2, 1, 0);
         $match->calculate();
 
         $matchCollection = new MatchCollection();
-        $matchCollection->addMatch(new Match($player3, $player4, 1, 0));
-        $matchCollection->addMatch(new Match($player3, $player4, 1, 0));
+        $matchCollection->addMatch(new MatchGame($player3, $player4, 1, 0));
+        $matchCollection->addMatch(new MatchGame($player3, $player4, 1, 0));
         $matchCollection->calculate();
 
         $this->assertEquals($this->round($player1->getRating()), $this->round($player3->getRating()));

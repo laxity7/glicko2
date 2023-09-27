@@ -29,10 +29,8 @@ final class Glicko2
      * results. If the application of Glicko-2 is expected to involve extremely improbable
      * collections of game outcomes, then τ should be set to a small value, even as small as,
      * say, τ = 0.2.
-     *
-     * @var float
      */
-    private $tau;
+    private float $tau;
 
     /**
      * @param float $tau
@@ -89,7 +87,7 @@ final class Glicko2
      */
     private function g(float $phiJ): float
     {
-        return 1 / sqrt(1 + 3 * pow($phiJ, 2) / pow(M_PI, 2));
+        return 1 / sqrt(1 + 3 * ($phiJ ** 2) / (M_PI ** 2));
     }
 
     /**
@@ -129,17 +127,17 @@ final class Glicko2
      */
     private function sigmaP(float $delta, float $sigma, float $phi, float $phiJ, float $mu, float $muJ): float
     {
-        $A = $a = log(pow($sigma, 2));
+        $A = $a = log($sigma ** 2);
         $fX = function ($x, $delta, $phi, $v, $a, $tau) {
-            return ((exp($x) * (pow($delta, 2) - pow($phi, 2) - $v - exp($x))) /
-                    (2 * pow((pow($phi, 2) + $v + exp($x)), 2))) - (($x - $a) / pow($tau, 2));
+            return ((exp($x) * (($delta ** 2) - ($phi ** 2) - $v - exp($x))) /
+                    (2 * ((($phi ** 2) + $v + exp($x)) ** 2))) - (($x - $a) / ($tau ** 2));
         };
         $epsilon = 0.000001;
         $v = $this->v($phiJ, $mu, $muJ);
         $tau = $this->tau;
 
-        if (pow($delta, 2) > (pow($phi, 2) + $v)) {
-            $B = log(pow($delta, 2) - pow($phi, 2) - $v);
+        if (($delta ** 2) > (($phi ** 2) + $v)) {
+            $B = log(($delta ** 2) - ($phi ** 2) - $v);
         } else {
             $k = 1;
             while ($fX($a - $k * $tau, $delta, $phi, $v, $a, $tau) < 0) {
@@ -175,7 +173,7 @@ final class Glicko2
      */
     private function phiS(float $phi, float $sigmaP): float
     {
-        return sqrt(pow($phi, 2) + pow($sigmaP, 2));
+        return sqrt(($phi ** 2) + ($sigmaP ** 2));
     }
 
     /**
@@ -186,7 +184,7 @@ final class Glicko2
      */
     private function phiP(float $phiS, float $v): float
     {
-        return 1 / sqrt(1 / pow($phiS, 2) + 1 / $v);
+        return 1 / sqrt(1 / ($phiS ** 2) + 1 / $v);
     }
 
     /**
@@ -200,6 +198,6 @@ final class Glicko2
      */
     private function muP(float $mu, float $muJ, float $phiP, float $phiJ, float $score): float
     {
-        return $mu + pow($phiP, 2) * $this->g($phiJ) * ($score - $this->E($mu, $muJ, $phiJ));
+        return $mu + ($phiP ** 2) * $this->g($phiJ) * ($score - $this->E($mu, $muJ, $phiJ));
     }
 }

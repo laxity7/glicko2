@@ -8,9 +8,9 @@ use ArrayObject;
 class MatchCollection extends BaseMatch
 {
     /**
-     * @var ArrayObject|Match[]
+     * @var MatchGame[]
      */
-    private $matches;
+    private ArrayObject $matches;
 
     public function __construct()
     {
@@ -18,15 +18,15 @@ class MatchCollection extends BaseMatch
     }
 
     /**
-     * @param Match $match
+     * @param MatchGame $match
      */
-    public function addMatch(Match $match): void
+    public function addMatch(MatchGame $match): void
     {
         $this->matches->append($match);
     }
 
     /**
-     * @return ArrayIterator|Match[]
+     * @return ArrayIterator|MatchGame[]
      */
     public function getMatches(): ArrayIterator
     {

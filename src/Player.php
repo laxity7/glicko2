@@ -4,46 +4,37 @@ namespace laxity7\glicko2;
 
 class Player
 {
-    protected const CONVERT = 173.7178;
-
     public const DEFAULT_RATING = 1500;
     public const DEFAULT_RATING_DEVIATION = 350;
     public const DEFAULT_RATING_VOLATILITY = 0.06;
 
+    /** @var float Scaling factor */
+    private const RATIO = 173.7178;
+
     /**
      * A rating r
-     *
-     * @var float
      */
-    private $rating;
+    private float $rating;
 
     /**
      * A rating μ
-     *
-     * @var float
      */
-    private $ratingMu;
+    private float $ratingMu;
 
     /**
      * A rating deviation RD
-     *
-     * @var float
      */
-    private $ratingDeviation;
+    private float $ratingDeviation;
 
     /**
      * A rating deviation φ
-     *
-     * @var float
      */
-    private $ratingDeviationPhi;
+    private float $ratingDeviationPhi;
 
     /**
      * A rating volatility σ
-     *
-     * @var float
      */
-    private $ratingVolatility;
+    private float $ratingVolatility;
 
     /**
      * Player constructor.
@@ -68,7 +59,7 @@ class Player
     private function setRating(float $rating): void
     {
         $this->rating = $rating;
-        $this->ratingMu = ($this->rating - static::DEFAULT_RATING) / self::CONVERT;
+        $this->ratingMu = ($this->rating - static::DEFAULT_RATING) / self::RATIO;
     }
 
     /**
@@ -77,7 +68,7 @@ class Player
     private function setRatingMu(float $mu): void
     {
         $this->ratingMu = $mu;
-        $this->rating = $this->ratingMu * self::CONVERT + static::DEFAULT_RATING;
+        $this->rating = $this->ratingMu * self::RATIO + static::DEFAULT_RATING;
     }
 
     /**
@@ -86,7 +77,7 @@ class Player
     private function setRatingDeviation(float $ratingDeviation): void
     {
         $this->ratingDeviation = $ratingDeviation;
-        $this->ratingDeviationPhi = $this->ratingDeviation / self::CONVERT;
+        $this->ratingDeviationPhi = $this->ratingDeviation / self::RATIO;
     }
 
     /**
@@ -95,7 +86,7 @@ class Player
     private function setRatingDeviationPhi(float $phi): void
     {
         $this->ratingDeviationPhi = $phi;
-        $this->ratingDeviation = $this->ratingDeviationPhi * self::CONVERT;
+        $this->ratingDeviation = $this->ratingDeviationPhi * self::RATIO;
     }
 
     /**

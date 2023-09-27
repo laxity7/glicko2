@@ -2,20 +2,21 @@
 
 namespace laxity7\glicko2;
 
-class Match extends BaseMatch
+class MatchGame extends BaseMatch
 {
-    private const RESULT_WIN = 1;
+    /** The actual score for win */
+    private const RESULT_WIN = 1.0;
+    /** The actual score for draw */
     private const RESULT_DRAW = 0.5;
-    private const RESULT_LOSS = 0;
+    /** The actual score for loss */
+    private const RESULT_LOSS = 0.0;
 
-    /** @var Player */
-    private $player1;
-    /** @var Player */
-    private $player2;
-    /** @var float */
-    private $score1;
-    /** @var float */
-    private $score2;
+    private Player $player1;
+    private Player $player2;
+    /** The player1 score */
+    private float $score1;
+    /** The player2 score */
+    private float $score2;
 
     /**
      * @param Player $player1
@@ -32,7 +33,9 @@ class Match extends BaseMatch
     }
 
     /**
-     * @return float
+     * Get the 1st player score
+     *
+     * @return float The 1st player score (0 for a loss, 0.5 for a draw, and 1 for a win)
      */
     public function getScore(): float
     {
@@ -49,10 +52,29 @@ class Match extends BaseMatch
                 break;
         }
 
-        return (float) $matchScore;
+        return $matchScore;
     }
 
     /**
+     * The winner of the match. Null if it's a draw.
+     *
+     * @return Player|null
+     */
+    public function getWinner(): ?Player
+    {
+        switch ($this->getScore()) {
+            case self::RESULT_WIN:
+                return $this->player1;
+            case self::RESULT_LOSS:
+                return $this->player2;
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Get the 1st player
+     *
      * @return Player
      */
     public function getPlayer1(): Player
@@ -61,6 +83,8 @@ class Match extends BaseMatch
     }
 
     /**
+     * Get the 2nd player
+     *
      * @return Player
      */
     public function getPlayer2(): Player
@@ -69,7 +93,7 @@ class Match extends BaseMatch
     }
 
     /**
-     * @param Match $match
+     * Calculate and change the rating of players
      */
     public function calculate(): void
     {

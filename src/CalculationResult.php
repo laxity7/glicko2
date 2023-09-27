@@ -4,20 +4,14 @@ namespace laxity7\glicko2;
 
 final class CalculationResult
 {
-    /**
-     * @var float
-     */
-    private $mu;
+    /** @var float A rating μ */
+    private float $mu;
 
-    /**
-     * @var float
-     */
-    private $phi;
+    /** @var float A rating deviation φ */
+    private float $phi;
 
-    /**
-     * @var float
-     */
-    private $sigma;
+    /** @var float A rating volatility σ */
+    private float $sigma;
 
     /**
      * @param float $mu
@@ -32,7 +26,7 @@ final class CalculationResult
     }
 
     /**
-     * @return float
+     * @return float A rating μ
      */
     public function getMu(): float
     {
@@ -40,7 +34,7 @@ final class CalculationResult
     }
 
     /**
-     * @return float
+     * @return float A rating deviation φ
      */
     public function getPhi(): float
     {
@@ -48,7 +42,7 @@ final class CalculationResult
     }
 
     /**
-     * @return float
+     * @return float A rating volatility σ
      */
     public function getSigma(): float
     {

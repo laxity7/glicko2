@@ -4,17 +4,14 @@ namespace laxity7\glicko2;
 
 abstract class BaseMatch
 {
-    /** @var Glicko2 */
-    private $ratingSystem;
+    private Glicko2 $ratingSystem;
 
     /**
      * @return Glicko2
      */
     protected function getRatingSystem(): Glicko2
     {
-        if ($this->ratingSystem === null) {
-            $this->ratingSystem = new Glicko2();
-        }
+        $this->ratingSystem ??= new Glicko2();
 
         return $this->ratingSystem;
     }
@@ -22,5 +19,5 @@ abstract class BaseMatch
     /**
      * Calculate match
      */
-    abstract public function calculate();
+    abstract public function calculate(): void;
 }
